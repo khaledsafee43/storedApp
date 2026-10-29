@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <main className="h-screen" dir="rtl">
+      <main className=" max-h-screen" dir="rtl">
         <SideBar/>
       </main>
     </>

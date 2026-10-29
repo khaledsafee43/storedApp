@@ -3,3 +3,7 @@
 body {
     @apply bg-conic-[at_left] from-teal-900 via-gray-950 to-lime-800 bg-no-repeat ;
 }
+
+.active {
+    @apply bg-white text-black p-2 rounded-md font-semibold text-xl
+}
