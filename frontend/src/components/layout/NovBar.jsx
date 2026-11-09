@@ -77,7 +77,7 @@ export default function DashboardHeader({ onSearch }) {
   return (
     <header
       dir="rtl"
-      className="sticky z-30 w-full border-b border-teal-500/20 bg-[#032B2D]/95 px-4 py-3 shadow-lg backdrop-blur-xl"
+      className="sticky top-0 left-0 right-0 z-30 w-full border-b border-teal-500/20 bg-[#032B2D]/95 px-4 py-3 shadow-lg backdrop-blur-xl"
     >
       <div className="flex flex-wrap items-center justify-between gap-4">
 
