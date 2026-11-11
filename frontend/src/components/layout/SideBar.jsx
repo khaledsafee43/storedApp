@@ -7,7 +7,6 @@ import {
   FaWarehouse,
   FaLandmark,
   FaUsers,
-  FaUser,
   FaMoneyBillWave,
   FaCoins,
   FaFileInvoiceDollar,
@@ -16,7 +15,6 @@ import {
   FaGear,
   FaBars,
   FaXmark,
-  FaChevronLeft,
 } from "react-icons/fa6";
 
 export default function SideBar() {
