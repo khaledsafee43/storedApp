@@ -1,32 +1,27 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+
+import {
+  FaBoxOpen,
+  FaTags,
+  FaWarehouse,
+  FaMoneyBillWave,
+  FaHashtag,
+  FaCalendarAlt,
+  FaPlus,
+  FaSave,
+} from "react-icons/fa";
 
 export default function AddProduct() {
   const [formData, setFormData] = useState({
     ProductName: "",
     CategoryID: "",
-    Price: "", // ✅ اصلاح شد (قبلاً UnitPrice بود)
+    Price: "",
     Quantity: "",
-    ExpiryDate: "", // ✅ اضافه شد
+    ExpiryDate: "",
   });
+
   const [CategoryID, setCategoryID] = useState([]);
   const [warehouseID, setWarehouseID] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [CategoryID, warehouseID] = await Promise.all([
-          axios.get("http://localhost:5000/api/productCategories"),
-          axios.get("http://localhost:5000/api/warehouses"),
-        ]);
-        setCategoryID(CategoryID.data);
-        setWarehouseID(warehouseID.data);
-      } catch (error) {
-        console.error("Error fetching customers/products:", error);
-      }
-    };
-    fetchData();
-  }, []);
 
   const handleChange = (e) => {
     setFormData({
@@ -37,156 +32,363 @@ export default function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:5000/api/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        alert("✅ محصول با موفقیت ثبت شد");
-        setFormData({
-          ProductName: "",
-          CategoryID: "",
-          Price: "",
-          Quantity: "",
-          ExpiryDate: "",
-          WarehouseID: "",
-        });
-      } else {
-        const data = await response.json();
-        alert(`❌ خطا: ${data.error}`);
-      }
-    } catch (error) {
-      console.error("❌ خطا در ارسال فرم:", error);
-      alert("خطایی در برقراری ارتباط با سرور رخ داد");
-    }
   };
 
+  // Reusable Input Style
+  const inputStyle = `
+    w-full
+    h-12
+    rounded-xl
+    border border-teal-500/20
+    bg-[#032B2D]/80
+    px-4
+    text-right
+    text-sm
+    text-teal-50
+    placeholder:text-slate-500
+    outline-none
+    transition-all duration-300
+    hover:border-teal-400/40
+    focus:border-teal-400
+    focus:bg-[#064044]
+    focus:ring-2
+    focus:ring-teal-400/10
+    focus:shadow-[0_0_15px_rgba(20,184,166,0.12)]
+  `;
+
+  // Reusable Label Style
+  const labelStyle = `
+    mb-2
+    flex items-center gap-2
+    text-sm font-semibold
+    text-slate-200
+  `;
+
+  // Reusable Field Component
+  const FormField = ({ label, icon: Icon, children }) => (
+    <div className="group">
+      <label className={labelStyle}>
+        <Icon className="text-teal-400 text-base" />
+        {label}
+      </label>
+
+      {children}
+    </div>
+  );
+
   return (
-    <div className="p-4">
-      <div className="bg-slate-900/80 shadow shadow-[#38bdf8] p-8 rounded-[8px] text-white">
-        <h2 className="text-2xl font-bold mb-4 text-center">
-          📦 ثبت محصول جدید
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4 w-full h-full">
-          {/* grid container */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Product Name */}
+    <div
+      dir="rtl"
+      className="w-full p-3 sm:p-5"
+    >
+      {/* Main Form Container */}
+      <div
+        className="
+          relative
+          mx-auto
+          w-full
+          max-w-6xl
+          overflow-hidden
+          rounded-2xl
+          border border-teal-400/20
+          bg-gradient-to-br
+          from-[#073D3A]
+          via-[#032B2D]
+          to-[#021F24]
+          shadow-[0_10px_40px_rgba(0,0,0,0.25)]
+        "
+      >
+
+        {/* Decorative Background */}
+        <div
+          className="
+            pointer-events-none
+            absolute -top-32 -left-32
+            h-72 w-72
+            rounded-full
+            bg-teal-400/10
+            blur-[100px]
+          "
+        />
+
+        <div
+          className="
+            pointer-events-none
+            absolute -bottom-32 -right-32
+            h-72 w-72
+            rounded-full
+            bg-emerald-400/10
+            blur-[100px]
+          "
+        />
+
+        {/* Form Header */}
+        <div
+          className="
+            relative
+            border-b border-teal-400/15
+            px-6 py-7
+            sm:px-8
+          "
+        >
+          <div className="flex items-center gap-4">
+
+            {/* Header Icon */}
+            <div
+              className="
+                flex h-14 w-14
+                shrink-0
+                items-center justify-center
+                rounded-2xl
+                border border-teal-400/30
+                bg-gradient-to-br
+                from-teal-400/20
+                to-emerald-500/5
+                shadow-[0_0_20px_rgba(20,184,166,0.10)]
+              "
+            >
+              <FaBoxOpen className="text-2xl text-teal-300" />
+            </div>
+
+            {/* Header Text */}
             <div>
-              <label className="block text-white text-right mb-1">
-                نام محصول
-              </label>
+              <h2 className="text-xl font-bold text-white sm:text-2xl">
+                ثبت محصول جدید
+              </h2>
+
+              <p className="mt-2 text-xs text-slate-400 sm:text-sm">
+                اطلاعات محصول جدید را در سیستم دواخانه ثبت کنید.
+              </p>
+            </div>
+
+          </div>
+
+          {/* Header Badge */}
+          <div
+            className="
+              absolute left-6 top-8
+              hidden sm:flex
+              items-center gap-2
+              rounded-full
+              border border-teal-400/20
+              bg-teal-400/5
+              px-3 py-2
+              text-xs text-teal-300
+            "
+          >
+            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            محصول جدید
+          </div>
+        </div>
+
+        {/* Form Body */}
+        <form
+          onSubmit={handleSubmit}
+          className="relative space-y-7 p-6 sm:p-8"
+        >
+
+          {/* Section Title */}
+          <div className="flex items-center gap-2">
+            <FaPlus className="text-teal-400" />
+
+            <h3 className="text-sm font-bold text-teal-100">
+              مشخصات و اطلاعات محصول
+            </h3>
+
+            <div className="h-px flex-1 bg-gradient-to-l from-teal-400/30 to-transparent" />
+          </div>
+
+          {/* Form Grid */}
+          <div className="grid grid-cols-1 gap-x-7 gap-y-6 md:grid-cols-2">
+
+            {/* Product Name */}
+            <FormField
+              label="نام محصول"
+              icon={FaBoxOpen}
+            >
               <input
                 type="text"
                 name="ProductName"
                 value={formData.ProductName}
                 onChange={handleChange}
-                className="bg-[#111827] text-white rounded-lg border border-gray-700 p-1.5 focus:border-green-400 focus:ring focus:ring-green-400 w-full text-right"
-                placeholder="مثال: واکسن حیوانی"
+                className={inputStyle}
+                placeholder="مثلاً: واکسین حیوانی"
                 required
               />
-            </div>
+            </FormField>
 
-            {/* Category ID */}
-            <div>
-              <label className="block text-white text-right mb-1">
-                آی دی کتگوری
-              </label>
+            {/* Category */}
+            <FormField
+              label="کتگوری محصول"
+              icon={FaTags}
+            >
               <select
                 name="CategoryID"
                 value={formData.CategoryID}
                 onChange={handleChange}
                 required
-                className="bg-[#111827] text-white rounded-lg border border-gray-700 p-1.5 focus:border-green-400 focus:ring focus:ring-green-400 w-full text-right"
+                className={inputStyle}
               >
-                <option value="">انتخاب کتگوری...</option>
+                <option value="" className="bg-[#032B2D]">
+                  انتخاب کتگوری...
+                </option>
+
                 {CategoryID.map((c) => (
-                  <option key={c.CategoryID} value={c.CategoryID}>
-                    ({c.CategoryID} ------ID) {c.CategoryName}
+                  <option
+                    key={c.CategoryID}
+                    value={c.CategoryID}
+                    className="bg-[#032B2D]"
+                  >
+                    ({c.CategoryID} -- ID) {c.CategoryName}
                   </option>
                 ))}
               </select>
-            </div>
+            </FormField>
 
-            {/* warehouse  ID*/}
-            <div>
-              <label className="block text-white text-right mb-1">
-                {" "}
-                آیدی گدام
-              </label>
+            {/* Warehouse */}
+            <FormField
+              label="انتخاب گدام"
+              icon={FaWarehouse}
+            >
               <select
                 name="warehouseID"
                 value={formData.warehouseID}
                 onChange={handleChange}
                 required
-                className="bg-[#111827] text-white rounded-lg border border-gray-700 p-1.5 focus:border-green-400 focus:ring focus:ring-green-400 w-full text-right"
+                className={inputStyle}
               >
-                <option value="">انتخاب گدام...</option>
+                <option value="" className="bg-[#032B2D]">
+                  انتخاب گدام...
+                </option>
+
                 {warehouseID.map((c) => (
-                  <option key={c.WarehouseID} value={c.WarehouseID}>
-                    ({c.WarehouseID} ------ID) {c.WarehouseName}
+                  <option
+                    key={c.WarehouseID}
+                    value={c.WarehouseID}
+                    className="bg-[#032B2D]"
+                  >
+                    ({c.WarehouseID} -- ID) {c.WarehouseName}
                   </option>
                 ))}
               </select>
-            </div>
+            </FormField>
 
             {/* Price */}
-            <div>
-              <label className="block text-white text-right mb-1">
-                قیمت (افغانی)
-              </label>
-              <input
-                type="number"
-                name="Price"
-                value={formData.Price}
-                onChange={handleChange}
-                className="bg-[#111827] text-white rounded-lg border border-gray-700 p-1.5 focus:border-green-400 focus:ring focus:ring-green-400 w-full text-right"
-                placeholder="مثال: 200"
-                required
-              />
-            </div>
+            <FormField
+              label="قیمت محصول (افغانی)"
+              icon={FaMoneyBillWave}
+            >
+              <div className="relative">
+                <input
+                  type="number"
+                  name="Price"
+                  value={formData.Price}
+                  onChange={handleChange}
+                  className={`${inputStyle} pl-16`}
+                  placeholder="مثلاً: 200"
+                  required
+                />
+
+                <span
+                  className="
+                    absolute left-3 top-1/2
+                    -translate-y-1/2
+                    rounded-lg
+                    bg-teal-400/10
+                    px-2 py-1
+                    text-xs font-bold
+                    text-teal-300
+                  "
+                >
+                  AFN
+                </span>
+              </div>
+            </FormField>
 
             {/* Quantity */}
-            <div>
-              <label className="block text-white text-right mb-1">تعداد</label>
+            <FormField
+              label="تعداد محصول"
+              icon={FaHashtag}
+            >
               <input
                 type="number"
                 name="Quantity"
                 value={formData.Quantity}
                 onChange={handleChange}
-                className="bg-[#111827] text-white rounded-lg border border-gray-700 p-1.5 focus:border-green-400 focus:ring focus:ring-green-400 w-full text-right"
-                placeholder="مثال: 50"
+                className={inputStyle}
+                placeholder="مثلاً: 50"
                 required
               />
-            </div>
+            </FormField>
 
             {/* Expiry Date */}
-            <div>
-              <label className="block text-white text-right mb-1">
-                تاریخ انقضا
-              </label>
+            <FormField
+              label="تاریخ انقضا"
+              icon={FaCalendarAlt}
+            >
               <input
                 type="date"
                 name="ExpiryDate"
                 value={formData.ExpiryDate}
                 onChange={handleChange}
-                className="bg-[#111827] text-white rounded-lg border border-gray-700 p-1.5 focus:border-green-400 focus:ring focus:ring-green-400 w-full text-right"
+                className={inputStyle}
               />
-            </div>
+            </FormField>
+
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-green-500 hover:bg-green-400 text-white font-bold py-2 rounded-xl shadow-lg transition"
+          {/* Divider */}
+          <div className="h-px bg-gradient-to-l from-transparent via-teal-400/20 to-transparent" />
+
+          {/* Form Footer */}
+          <div
+            className="
+              flex flex-col-reverse
+              items-center justify-between
+              gap-4
+              sm:flex-row
+            "
           >
-            ثبت محصول
-          </button>
+
+            {/* Information */}
+            <p className="text-xs text-slate-400">
+              <span className="text-teal-400">*</span>
+              فیلدهای علامت‌گذاری‌شده الزامی هستند.
+            </p>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="
+                group
+                flex w-full sm:w-auto
+                min-w-48
+                items-center justify-center
+                gap-3
+                rounded-xl
+                border border-emerald-300/20
+                bg-gradient-to-l
+                from-[#059669]
+                via-[#0D9488]
+                to-[#0F766E]
+                px-7 py-3.5
+                text-sm font-bold
+                text-white
+                shadow-[0_5px_20px_rgba(16,185,129,0.15)]
+                transition-all duration-300
+                hover:-translate-y-0.5
+                hover:shadow-[0_5px_25px_rgba(16,185,129,0.30)]
+                active:scale-95
+              "
+            >
+              <FaSave className="text-lg transition-transform duration-300 group-hover:scale-110" />
+
+              ثبت محصول
+
+            </button>
+
+          </div>
+
         </form>
       </div>
     </div>

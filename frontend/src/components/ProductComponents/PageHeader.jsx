@@ -14,7 +14,7 @@ export default function PageHeader() {
   shadow-[0_4px_25px_rgba(0,214,192,0.12)]
   backdrop-blur-xl
     p-3
-    rounded-b-2xl
+    rounded-2xl
     text-[#F0F9FF]
     flex items-center justify-between
     text-sm text-[#F0F9FF]
