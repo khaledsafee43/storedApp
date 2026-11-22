@@ -24,6 +24,8 @@ export default function PageHeader() {
     >
       <nav className="flex gap-4">
         <NavLink
+        to="/products"
+        end
           className={({ isActive }) =>
             `group relative flex items-center gap-3 rounded-xl px-4 py-3
   text-sm font-semibold transition-all duration-300
@@ -33,16 +35,16 @@ export default function PageHeader() {
       : "border border-transparent text-slate-300 hover:border-teal-400/20 hover:bg-teal-400/10 hover:text-teal-300"
   }`
           }
-          to="/products/add"
+          
         >
           {({ isActive }) => (
             <FaBox
-              className={`text-lg transition-all duration-300 
+              className={` transition-all duration-300 
                  ${
-                  isActive
-                    ? "scale-110 text-[#5EEAD4]"
-                    : "text-slate-400 group-hover:scale-110 group-hover:text-teal-300"
-                }
+                   isActive
+                     ? "scale-110 text-[#5EEAD4]"
+                     : "text-slate-400 group-hover:scale-110 group-hover:text-teal-300"
+                 }
               `}
             />
           )}{" "}

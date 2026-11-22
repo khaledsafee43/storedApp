@@ -9,6 +9,7 @@ import AddCategory from "./components/ProductComponents/AddCategory";
 import CategoriesList from "./components/ProductComponents/CategoriesList";
 import AddProduct from "./components/ProductComponents/AddProduct";
 
+
 function App() {
   return (
     <>
@@ -21,7 +22,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />}>
-                <Route path="add" element={<AddProduct />} />
+                <Route index element={<AddProduct />} />
                 <Route path="list" element={<ProductsList />} />
                 <Route path="add-category" element={<AddCategory />} />
                 <Route path="categories" element={<CategoriesList />} />
