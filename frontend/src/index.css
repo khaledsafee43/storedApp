@@ -44,3 +44,17 @@ body {
 .glass-scrollbar::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+@keyframes page-loader {
+  0% {
+    transform: translateX(300%);
+  }
+
+  100% {
+    transform: translateX(-300%);
+  }
+}
+
+.animate-page-loader {
+  animation: page-loader 0.7s ease-in-out infinite;
+}

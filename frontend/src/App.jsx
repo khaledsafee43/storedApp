@@ -8,6 +8,12 @@ import ProductsList from "./components/ProductComponents/ProductsList";
 import AddCategory from "./components/ProductComponents/AddCategory";
 import CategoriesList from "./components/ProductComponents/CategoriesList";
 import AddProduct from "./components/ProductComponents/AddProduct";
+import BankLayout from "./pages/BankLayout";
+import WareHouseLayout from "./pages/WarehouseLayout";
+import AddWarhouses from "./components/warehouseComponents/AddWarhouses";
+import WarehouseTransfersList from "./components/warehouseComponents/WarhouseTransferList";
+import AddTransfer from "./components/warehouseComponents/AddTransfer";
+import Warehouses from "./components/warehouseComponents/Warhouses";
 
 
 function App() {
@@ -26,6 +32,13 @@ function App() {
                 <Route path="list" element={<ProductsList />} />
                 <Route path="add-category" element={<AddCategory />} />
                 <Route path="categories" element={<CategoriesList />} />
+              </Route>
+              <Route path="/MedicineBank" element={<BankLayout />} />
+              <Route path="/MedicineWarehouse" element={<WareHouseLayout />} >
+              <Route index element={<AddWarhouses />} />
+              <Route path="addTransfer" element={<AddTransfer />} />
+              <Route path="warhouses" element={<Warehouses/>}/>
+              <Route path="WarehouseTransfersList" element={<WarehouseTransfersList />} />
               </Route>
             </Routes>
           </main>
